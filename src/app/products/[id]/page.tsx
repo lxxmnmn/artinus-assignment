@@ -1,10 +1,10 @@
 'use client';
 
 import Link from 'next/link';
-import Image from 'next/image';
 import { useParams } from 'next/navigation';
 import { LoaderCircle, CircleAlert } from 'lucide-react';
 import { useProductDetail } from '@/hooks/useProduct';
+import ProductCarousel from '@/components/product/ProductCarousel';
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -13,13 +13,6 @@ import {
   BreadcrumbPage,
   BreadcrumbSeparator,
 } from '@/components/ui/breadcrumb';
-import {
-  Carousel,
-  CarouselContent,
-  CarouselItem,
-  CarouselNext,
-  CarouselPrevious,
-} from '@/components/ui/carousel';
 import { Badge } from '@/components/ui/badge';
 
 export default function ProductDetailPage() {
@@ -61,30 +54,7 @@ export default function ProductDetailPage() {
       </Breadcrumb>
 
       <section className="grid grid-cols-1 md:grid-cols-2 gap-16 items-start">
-        <div className="w-full">
-          <Carousel className="w-full max-w-lg mx-auto">
-            <CarouselContent>
-              {product.images.map((src, index) => (
-                <CarouselItem key={index}>
-                  <div className="relative aspect-[4/5] w-full overflow-hidden">
-                    <Image
-                      src={src}
-                      alt={`${product.title} ${index + 1}`}
-                      fill
-                      className="object-contain p-2"
-                    />
-                  </div>
-                </CarouselItem>
-              ))}
-            </CarouselContent>
-            {product.images.length > 1 && (
-              <>
-                <CarouselPrevious />
-                <CarouselNext />
-              </>
-            )}
-          </Carousel>
-        </div>
+        <ProductCarousel images={product.images} title={product.title} />
 
         <article className="flex flex-col gap-8">
           <div>
