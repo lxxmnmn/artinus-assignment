@@ -7,6 +7,8 @@ import { useInfiniteProductList } from '@/hooks/useProduct';
 import ProductCard from '@/components/product/ProductCard';
 import ScrollToTopButton from '@/components/common/ScrollToTopButton';
 
+import type { Product } from '@/types/product';
+
 export default function ProductListPage() {
   const { data, hasNextPage, isFetchingNextPage, fetchNextPage } = useInfiniteProductList();
 
@@ -29,7 +31,7 @@ export default function ProductListPage() {
     return () => observer.disconnect();
   }, [fetchNextPage, hasNextPage]);
 
-  const products = data?.pages.flatMap((page) => page.products) ?? [];
+  const products: Product[] = data?.pages.flatMap((page) => page.products) ?? [];
 
   return (
     <main className="max-w-6xl mx-auto p-8">
@@ -47,13 +49,13 @@ export default function ProductListPage() {
         </ul>
 
         <div ref={lazyLoadRef} className="min-h-[80px] flex justify-center items-center mt-8">
-          {isFetchingNextPage && (
+          {(!products.length || isFetchingNextPage) && (
             <LoaderCircle
               role="status"
               className="w-8 h-8 text-neutral-300 animate-spin cursor-progress"
             />
           )}
-          {!hasNextPage && <ScrollToTopButton />}
+          {products.length > 0 && !hasNextPage && <ScrollToTopButton />}
         </div>
       </section>
     </main>
