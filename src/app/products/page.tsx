@@ -2,8 +2,10 @@
 
 import Image from 'next/image';
 import { useEffect, useRef } from 'react';
+import { LoaderCircle } from 'lucide-react';
 import { useInfiniteProductList } from '@/hooks/useProduct';
 import { Card, CardContent } from '@/components/ui/card';
+import ScrollToTopButton from '@/components/common/ScrollToTopButton';
 
 export default function ProductListPage() {
   const { data, hasNextPage, isFetchingNextPage, fetchNextPage } = useInfiniteProductList();
@@ -65,7 +67,13 @@ export default function ProductListPage() {
         </ul>
 
         <div ref={lazyLoadRef} className="min-h-[80px] flex justify-center items-center mt-8">
-          {isFetchingNextPage && <p className="text-sm text-muted-foreground">Loading ...</p>}
+          {isFetchingNextPage && (
+            <LoaderCircle
+              role="status"
+              className="w-8 h-8 text-neutral-300 animate-spin cursor-progress"
+            />
+          )}
+          {!hasNextPage && <ScrollToTopButton />}
         </div>
       </section>
     </main>
