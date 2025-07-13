@@ -5,6 +5,7 @@ import { useParams } from 'next/navigation';
 import { LoaderCircle, CircleAlert } from 'lucide-react';
 import { useProductDetail } from '@/hooks/useProduct';
 import ProductCarousel from '@/components/product/ProductCarousel';
+import ProductReviewCard from '@/components/product/ProductReviewCard';
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -32,12 +33,12 @@ export default function ProductDetailPage() {
     return (
       <div className="flex justify-center align-center text-neutral-300">
         <CircleAlert className="w-8 h-8" />
-        <p className="p-4 text-sm">상품 정보를 불러오지 못했습니다.</p>
+        <p className="p-4 text-sm">Failed to get product details.</p>
       </div>
     );
 
   return (
-    <main className="max-w-6xl mx-auto p-8 pt-12">
+    <main className="max-w-5xl mx-auto p-8 py-12">
       <Breadcrumb className="py-4">
         <BreadcrumbList>
           <BreadcrumbItem>
@@ -49,7 +50,7 @@ export default function ProductDetailPage() {
           <BreadcrumbItem>{product.category}</BreadcrumbItem>
           <BreadcrumbSeparator />
           <BreadcrumbItem>
-            <BreadcrumbPage>{product.brand}</BreadcrumbPage>
+            <BreadcrumbPage>{product.title}</BreadcrumbPage>
           </BreadcrumbItem>
         </BreadcrumbList>
       </Breadcrumb>
@@ -81,9 +82,30 @@ export default function ProductDetailPage() {
             ))}
           </div>
 
-          <div>
-            <p className="text-neutral-600">{product.description}</p>
+          <p className="text-neutral-600">{product.description}</p>
+
+          <div className="flex flex-col gap-2">
+            <p className="text-xs text-neutral-400">
+              Size:&nbsp;
+              {product.dimensions.width} × {product.dimensions.height} × {product.dimensions.depth}
+            </p>
+            <p className="text-xs text-neutral-400">Shipping: {product.shippingInformation}</p>
+            <p className="text-xs text-neutral-400">Warranty: {product.warrantyInformation}</p>
+            <p className="text-xs text-neutral-400">Return policy: {product.returnPolicy}</p>
           </div>
+        </article>
+      </section>
+
+      <section>
+        <h2 className="text-2xl font-bold mb-6">Review</h2>
+        <article>
+          <ul className="flex flex-col gap-4">
+            {product.reviews.map((review, i) => (
+              <li key={i}>
+                <ProductReviewCard review={review} />
+              </li>
+            ))}
+          </ul>
         </article>
       </section>
     </main>
