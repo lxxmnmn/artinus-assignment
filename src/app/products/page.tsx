@@ -34,8 +34,8 @@ export default function ProductListPage() {
   const products: Product[] = data?.pages.flatMap((page) => page.products) ?? [];
 
   return (
-    <main className="max-w-6xl mx-auto p-8">
-      <h1 className="text-3xl font-bold mb-8">Products</h1>
+    <main className="max-w-6xl mx-auto p-10 py-14">
+      <h1 className="text-3xl font-extrabold mb-8">Products</h1>
 
       <section>
         <ul className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
