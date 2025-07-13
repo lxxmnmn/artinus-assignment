@@ -14,6 +14,7 @@ import {
   BreadcrumbSeparator,
 } from '@/components/ui/breadcrumb';
 import { Badge } from '@/components/ui/badge';
+import { StarRating } from '@/components/ui/star-rating';
 
 export default function ProductDetailPage() {
   const params = useParams<{ id: string }>();
@@ -58,14 +59,17 @@ export default function ProductDetailPage() {
 
         <article className="flex flex-col gap-8">
           <div>
-            <h2 className="text-2xl font-semibold mb-6">{product.brand}</h2>
+            <h2 className="text-2xl font-semibold mb-4">{product.brand}</h2>
             <h1 className="text-3xl font-bold">{product.title}</h1>
           </div>
 
-          <div className="flex flex-row items-center">
-            <span className="text-lg font-bold text-red-400 mr-4">
-              {product.discountPercentage}%
-            </span>
+          <div className="flex items-center gap-2">
+            <StarRating rating={product.rating} />
+            <span className="text-sm text-neutral-500">{product.rating.toFixed(1)}</span>
+          </div>
+
+          <div className="flex items-center gap-4">
+            <span className="text-lg font-bold text-red-400">{product.discountPercentage}%</span>
             <p className="text-3xl font-extrabold">${product.price}</p>
           </div>
 
