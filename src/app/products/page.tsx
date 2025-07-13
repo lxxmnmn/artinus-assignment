@@ -1,10 +1,10 @@
 'use client';
 
-import Image from 'next/image';
+import Link from 'next/link';
 import { useEffect, useRef } from 'react';
 import { LoaderCircle } from 'lucide-react';
 import { useInfiniteProductList } from '@/hooks/useProduct';
-import { Card, CardContent } from '@/components/ui/card';
+import ProductCard from '@/components/product/ProductCard';
 import ScrollToTopButton from '@/components/common/ScrollToTopButton';
 
 export default function ProductListPage() {
@@ -32,36 +32,16 @@ export default function ProductListPage() {
   const products = data?.pages.flatMap((page) => page.products) ?? [];
 
   return (
-    <main className="max-w-6xl mx-auto p-6">
-      <h1 className="text-2xl font-bold mb-6">Products</h1>
+    <main className="max-w-6xl mx-auto p-8">
+      <h1 className="text-3xl font-bold mb-8">Products</h1>
 
       <section>
-        <ul className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+        <ul className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
           {products.map((product) => (
             <li key={product.id}>
-              <Card key={product.id} className="flex flex-col overflow-hidden rounded-xl shadow-lg">
-                <div className="relative w-full aspect-[4/3]">
-                  <Image
-                    src={product.thumbnail}
-                    alt={product.title}
-                    fill
-                    className="object-contain"
-                  />
-                </div>
-                <CardContent className="flex flex-1 flex-col justify-between p-4">
-                  <div>
-                    <h2 className="text-lg font-semibold truncate" title={product.title}>
-                      {product.title}
-                    </h2>
-                    <p className="text-sm text-muted-foreground line-clamp-2 mb-2">
-                      {product.brand}
-                    </p>
-                  </div>
-                  <div className="mt-3">
-                    <span className="font-bold">${product.price.toLocaleString()}</span>
-                  </div>
-                </CardContent>
-              </Card>
+              <Link href={`/products/${product.id}`}>
+                <ProductCard product={product} />
+              </Link>
             </li>
           ))}
         </ul>
