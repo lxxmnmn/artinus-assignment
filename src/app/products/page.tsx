@@ -39,10 +39,10 @@ export default function ProductListPage() {
 
       <section>
         <ul className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
-          {products.map((product) => (
+          {products.map((product, i) => (
             <li key={product.id}>
               <Link href={`/products/${product.id}`}>
-                <ProductCard product={product} />
+                <ProductCard product={product} priority={i === 0} />
               </Link>
             </li>
           ))}

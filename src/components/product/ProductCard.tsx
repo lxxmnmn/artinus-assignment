@@ -1,17 +1,26 @@
 import Image from 'next/image';
 import { Card, CardContent } from '@/components/ui/card';
+import { IMAGE_SIZES_FULL } from '@/constants/common';
 
 import type { Product } from '@/types/product';
 
 interface ProductCardProps {
   product: Product;
+  priority?: boolean;
 }
 
-export default function ProductCard({ product }: ProductCardProps) {
+export default function ProductCard({ product, priority }: ProductCardProps) {
   return (
     <Card className="h-full overflow-hidden flex flex-col shadow-md hover:scale-105 transition-transform duration-300 ease-in-out">
       <div className="relative w-full aspect-[3/2]">
-        <Image src={product.thumbnail} alt={product.title} fill className="object-contain" />
+        <Image
+          src={product.thumbnail}
+          alt={product.title}
+          fill
+          priority={priority}
+          sizes={IMAGE_SIZES_FULL}
+          className="object-contain"
+        />
       </div>
       <CardContent className="flex flex-col justify-between flex-1 p-4 pb-0">
         <div className="space-y-1">

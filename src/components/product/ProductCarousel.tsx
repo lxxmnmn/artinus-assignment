@@ -6,6 +6,7 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from '@/components/ui/carousel';
+import { IMAGE_SIZES_FULL } from '@/constants/common';
 
 import type { Product } from '@/types/product';
 
@@ -15,10 +16,17 @@ export default function ProductCarousel({ images, title }: ProductCarouselProps)
   return (
     <Carousel className="w-full max-w-lg mx-auto">
       <CarouselContent>
-        {images.map((src, index) => (
-          <CarouselItem key={index}>
-            <div className="relative aspect-[4/5] w-full overflow-hidden">
-              <Image src={src} alt={`${title} ${index + 1}`} fill className="object-contain p-2" />
+        {images.map((src, i) => (
+          <CarouselItem key={i}>
+            <div className="relative w-full aspect-[4/5] overflow-hidden">
+              <Image
+                src={src}
+                alt={`${title} ${i + 1}`}
+                fill
+                priority={i === 0}
+                sizes={IMAGE_SIZES_FULL}
+                className="object-contain p-2"
+              />
             </div>
           </CarouselItem>
         ))}
