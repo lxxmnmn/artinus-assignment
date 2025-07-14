@@ -2,8 +2,10 @@
 
 import Link from 'next/link';
 import { useParams } from 'next/navigation';
-import { LoaderCircle, CircleAlert } from 'lucide-react';
+import { CircleAlert } from 'lucide-react';
 import { useProductDetail } from '@/hooks/useProduct';
+
+import LoadingSpinner from '@/components/common/LoadingSpinner';
 import ProductCarousel from '@/components/product/ProductCarousel';
 import ProductReviewCard from '@/components/product/ProductReviewCard';
 import {
@@ -22,12 +24,7 @@ export default function ProductDetailPage() {
   const id = Number(params.id);
   const { data: product, isLoading, isError } = useProductDetail(id);
 
-  if (isLoading)
-    return (
-      <div className="flex justify-center align-center text-neutral-300">
-        <LoaderCircle role="status" className="w-8 h-8 animate-spin cursor-progress" />
-      </div>
-    );
+  if (isLoading) return <LoadingSpinner wrapperClassName="h-screen" />;
 
   if (isError || !product)
     return (

@@ -2,9 +2,10 @@
 
 import Link from 'next/link';
 import { useEffect, useRef } from 'react';
-import { LoaderCircle } from 'lucide-react';
 import { useInfiniteProductList } from '@/hooks/useProduct';
+
 import ProductCard from '@/components/product/ProductCard';
+import LoadingSpinner from '@/components/common/LoadingSpinner';
 import ScrollToTopButton from '@/components/common/ScrollToTopButton';
 
 import type { Product } from '@/types/product';
@@ -51,12 +52,7 @@ export default function ProductListPage() {
         </ul>
 
         <div ref={lazyLoadRef} className="min-h-[60px] flex justify-center items-center mt-10">
-          {(!products.length || isFetchingNextPage) && (
-            <LoaderCircle
-              role="status"
-              className="w-8 h-8 text-neutral-300 animate-spin cursor-progress"
-            />
-          )}
+          {(!products.length || isFetchingNextPage) && <LoadingSpinner />}
           {products.length > 0 && !hasNextPage && <ScrollToTopButton />}
         </div>
       </section>
