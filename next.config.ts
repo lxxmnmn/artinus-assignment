@@ -9,6 +9,7 @@ if (!process.env.NEXT_PUBLIC_API_BASE_URL) {
 const nextConfig: NextConfig = {
   reactStrictMode: true,
   poweredByHeader: false,
+  productionBrowserSourceMaps: false,
   images: {
     remotePatterns: [
       {
