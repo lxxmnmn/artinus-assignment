@@ -2,10 +2,10 @@
 
 import Link from 'next/link';
 import { useParams } from 'next/navigation';
-import { CircleAlert } from 'lucide-react';
 import { useProductDetail } from '@/hooks/useProduct';
 
 import LoadingSpinner from '@/components/common/LoadingSpinner';
+import ErrorFallback from '@/components/common/ErrorFallback';
 import ProductCarousel from '@/components/product/ProductCarousel';
 import ProductReviewCard from '@/components/product/ProductReviewCard';
 import {
@@ -28,10 +28,11 @@ export default function ProductDetailPage() {
 
   if (isError || !product)
     return (
-      <div className="flex justify-center align-center text-neutral-300">
-        <CircleAlert className="w-8 h-8" />
-        <p className="p-4 text-sm">Failed to get product details.</p>
-      </div>
+      <ErrorFallback
+        message="Failed to load product details."
+        buttonText="Back to List"
+        buttonLink="/products"
+      />
     );
 
   return (

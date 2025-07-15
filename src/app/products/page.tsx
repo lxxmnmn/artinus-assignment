@@ -5,13 +5,15 @@ import { useEffect, useRef } from 'react';
 import { useInfiniteProductList } from '@/hooks/useProduct';
 
 import ProductCard from '@/components/product/ProductCard';
+import ErrorFallback from '@/components/common/ErrorFallback';
 import LoadingSpinner from '@/components/common/LoadingSpinner';
 import ScrollToTopButton from '@/components/common/ScrollToTopButton';
 
 import type { Product } from '@/types/product';
 
 export default function ProductListPage() {
-  const { data, hasNextPage, isFetchingNextPage, fetchNextPage } = useInfiniteProductList();
+  const { data, isError, hasNextPage, isFetchingNextPage, fetchNextPage } =
+    useInfiniteProductList();
 
   const lazyLoadRef = useRef<HTMLDivElement | null>(null);
 
@@ -33,6 +35,8 @@ export default function ProductListPage() {
   }, [fetchNextPage, hasNextPage]);
 
   const products: Product[] = data?.pages.flatMap((page) => page.products) ?? [];
+
+  if (isError) return <ErrorFallback message="Failed to load product list." />;
 
   return (
     <main className="max-w-7xl mx-auto px-12 py-14">
